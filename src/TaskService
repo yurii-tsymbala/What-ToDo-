@@ -1,0 +1,12 @@
+class Task {
+// generate unique id
+}
+
+class TaskService {
+
+    // create task
+    // read   task
+    // update task
+    // delete task
+
+}
