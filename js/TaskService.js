@@ -1,11 +1,13 @@
-class Task {
+import { v4 as uuid } from "uuid";
+
+export class Task {
   constructor(name) {
     this.name = name;
-    this.id = require("crypto").randomUUID();
+    this.id = uuid();
   }
 }
 
-class TaskService {
+export class TaskService {
   constructor() {
     this.tasks = this.generateDefaultTasks();
   }
@@ -34,9 +36,4 @@ class TaskService {
     let task3 = new Task("Buy milk");
     return [task1, task2, task3];
   }
-}
-
-module.exports = {
-  TaskService, 
-  Task
 }
