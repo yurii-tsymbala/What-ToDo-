@@ -14,7 +14,7 @@ export class TaskService {
 
   createTask(name) {
     let task = new Task(name);
-    this.tasks.push(task);
+    this.tasks.unshift(task);
   }
 
   updateTask(task) {
