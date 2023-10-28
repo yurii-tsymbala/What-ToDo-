@@ -12,10 +12,22 @@ document.getElementById("addBtn").addEventListener("click", function () {
 });
 
 function loadList() {
-  listDiv.innerHTML = "";
-  for (const task of taskService.allTasks()) {
-    configureCell(task);
-  }
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", "http://localhost:3001/tasks");
+  xhr.send();
+  xhr.onload = function () {
+    if (xhr.status == 200) {
+      const tasks = JSON.parse(xhr.responseText);
+      listDiv.innerHTML = "";
+      for (const task of tasks) {
+        configureCell(task);
+      }
+    }
+  };
+  // listDiv.innerHTML = "";
+  // for (const task of taskService.allTasks()) {
+  //   configureCell(task);
+  // }
 }
 
 function configureCell(currentTask) {
@@ -49,7 +61,7 @@ function configureCell(currentTask) {
     } else {
       let deletedLabel = document.getElementById(currentTask.id);
       deletedLabel.parentNode.removeChild(deletedLabel);
-      editBtn.innerHTML = "Save"
+      editBtn.innerHTML = "Save";
       editBtn.className = "btnSave";
       cell.prepend(input);
       isEdited = true;
