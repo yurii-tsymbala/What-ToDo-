@@ -1,33 +1,33 @@
 import { TaskService, Task } from "./TaskService";
 
-let taskService = new TaskService();
 const listDiv = document.getElementById("list");
 loadList();
 
 document.getElementById("addBtn").addEventListener("click", function () {
   const input = document.getElementById("taskName");
-  taskService.createTask(input.value);
+  TaskService.createTask(input.value).then(
+    function () {
+      loadList();
+    },
+    function (error) {
+      console.log(error);
+    }
+  );
   input.value = "";
-  loadList();
 });
 
 function loadList() {
-  let xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://localhost:3001/tasks");
-  xhr.send();
-  xhr.onload = function () {
-    if (xhr.status == 200) {
-      const tasks = JSON.parse(xhr.responseText);
+  TaskService.allTasks().then(
+    function (tasks) {
       listDiv.innerHTML = "";
       for (const task of tasks) {
         configureCell(task);
       }
+    },
+    function (error) {
+      console.log(error);
     }
-  };
-  // listDiv.innerHTML = "";
-  // for (const task of taskService.allTasks()) {
-  //   configureCell(task);
-  // }
+  );
 }
 
 function configureCell(currentTask) {
@@ -55,9 +55,14 @@ function configureCell(currentTask) {
     if (isEdited) {
       editBtn.className = "btnEdit";
       currentTask.name = input.value;
-      taskService.updateTask(currentTask);
-      console.log("Updated");
-      loadList();
+      TaskService.updateTask(currentTask).then(
+        function () {
+          loadList();
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
     } else {
       let deletedLabel = document.getElementById(currentTask.id);
       deletedLabel.parentNode.removeChild(deletedLabel);
@@ -71,9 +76,14 @@ function configureCell(currentTask) {
   dlteBtn.className = "btnDelete";
   dlteBtn.innerHTML = "Delete";
   dlteBtn.onclick = function () {
-    taskService.deleteTask(currentTask);
-    console.log("Deleted");
-    loadList();
+    TaskService.deleteTask(currentTask).then(
+      function () {
+        loadList();
+      },
+      function (error) {
+        console.log(error);
+      }
+    );
   };
 
   cell.appendChild(label);
