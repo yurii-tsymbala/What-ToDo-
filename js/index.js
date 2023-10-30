@@ -3,43 +3,42 @@ import { TaskService, Task } from "./TaskService";
 const listDiv = document.getElementById("list");
 loadList();
 
-document.getElementById("addBtn").addEventListener("click", function () {
+document.getElementById("addBtn").addEventListener("click", async function () {
   const input = document.getElementById("taskName");
-  TaskService.createTask(input.value).then(
-    function () {
-      loadList();
-    },
-    function (error) {
-      console.log(error);
-    }
-  );
+  try {
+    await TaskService.createTask(input.value);
+    await loadList();
+  } catch (error) {
+    console.log(error);
+  }
   input.value = "";
 });
 
-function loadList() {
-  TaskService.allTasks().then(
-    function (tasks) {
-      listDiv.innerHTML = "";
-      for (const task of tasks) {
-        configureCell(task);
-      }
-    },
-    function (error) {
-      console.log(error);
+async function loadList() {
+  listDiv.innerHTML = "";
+  try {
+    const tasks = await TaskService.allTasks();
+    for (const task of tasks) {
+      configureCell(task);
     }
-  );
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function configureCell(currentTask) {
   let isEdited = false;
-  let cell = document.createElement("div");
-  cell.className = "cell divWithBorder";
 
+  let cell = document.createElement("div");
   let buttonsWrapper = document.createElement("div");
-  let editBtn = document.createElement("button");
-  let dlteBtn = document.createElement("button");
   let label = document.createElement("label");
   let input = document.createElement("input");
+  let editBtn = document.createElement("button");
+  let dlteBtn = document.createElement("button");
+
+  cell.className = "cell divWithBorder";
+  
+  buttonsWrapper.className = "buttonsWrapper";
 
   input.className = "input";
   input.value = currentTask.name;
@@ -51,18 +50,16 @@ function configureCell(currentTask) {
 
   editBtn.className = "btnEdit";
   editBtn.innerHTML = "Edit";
-  editBtn.onclick = function () {
+  editBtn.onclick = async function () {
     if (isEdited) {
       editBtn.className = "btnEdit";
       currentTask.name = input.value;
-      TaskService.updateTask(currentTask).then(
-        function () {
-          loadList();
-        },
-        function (error) {
-          console.log(error);
-        }
-      );
+      try {
+        await TaskService.updateTask(currentTask);
+        await loadList();
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       let deletedLabel = document.getElementById(currentTask.id);
       deletedLabel.parentNode.removeChild(deletedLabel);
@@ -75,15 +72,13 @@ function configureCell(currentTask) {
 
   dlteBtn.className = "btnDelete";
   dlteBtn.innerHTML = "Delete";
-  dlteBtn.onclick = function () {
-    TaskService.deleteTask(currentTask).then(
-      function () {
-        loadList();
-      },
-      function (error) {
-        console.log(error);
-      }
-    );
+  dlteBtn.onclick = async function () {
+    try {
+      await TaskService.deleteTask(currentTask);
+      await loadList();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   cell.appendChild(label);
@@ -91,8 +86,6 @@ function configureCell(currentTask) {
 
   buttonsWrapper.appendChild(editBtn);
   buttonsWrapper.appendChild(dlteBtn);
-
-  buttonsWrapper.className = "buttonsWrapper";
 
   listDiv.appendChild(cell);
 }
