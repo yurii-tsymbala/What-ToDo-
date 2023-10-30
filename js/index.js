@@ -1,21 +1,28 @@
 import { TaskService, Task } from "./TaskService";
 
 const listDiv = document.getElementById("list");
+const taskInput = document.getElementById("taskName");
 loadList();
 
 document.getElementById("addBtn").addEventListener("click", async function () {
-  const input = document.getElementById("taskName");
+  if (taskInput.value.length < 5) {
+    taskInput.value = "";
+    taskInput.placeholder = "Too small (=";
+    return;
+  }
   try {
-    await TaskService.createTask(input.value);
+    await TaskService.createTask(taskInput.value);
     await loadList();
   } catch (error) {
     console.log(error);
   }
-  input.value = "";
+  taskInput.value = "";
 });
 
 async function loadList() {
   listDiv.innerHTML = "";
+  taskInput.placeholder = "What do u want to do?"
+  
   try {
     const tasks = await TaskService.allTasks();
     for (const task of tasks) {
@@ -32,17 +39,17 @@ function configureCell(currentTask) {
   let cell = document.createElement("div");
   let buttonsWrapper = document.createElement("div");
   let label = document.createElement("label");
-  let input = document.createElement("input");
+  let taskEditInput = document.createElement("input");
   let editBtn = document.createElement("button");
   let dlteBtn = document.createElement("button");
 
   cell.className = "cell divWithBorder";
-  
+
   buttonsWrapper.className = "buttonsWrapper";
 
-  input.className = "input";
-  input.value = currentTask.name;
-  input.id = currentTask.id;
+  taskEditInput.className = "input";
+  taskEditInput.value = currentTask.name;
+  taskEditInput.id = currentTask.id;
 
   label.className = "label";
   label.textContent = currentTask.name;
@@ -53,7 +60,12 @@ function configureCell(currentTask) {
   editBtn.onclick = async function () {
     if (isEdited) {
       editBtn.className = "btnEdit";
-      currentTask.name = input.value;
+      currentTask.name = taskEditInput.value;
+      if (taskEditInput.value.length < 5) {
+        taskEditInput.value = "";
+        taskEditInput.placeholder = "Too small (=";
+        return;
+      }
       try {
         await TaskService.updateTask(currentTask);
         await loadList();
@@ -65,7 +77,7 @@ function configureCell(currentTask) {
       deletedLabel.parentNode.removeChild(deletedLabel);
       editBtn.innerHTML = "Save";
       editBtn.className = "btnSave";
-      cell.prepend(input);
+      cell.prepend(taskEditInput);
       isEdited = true;
     }
   };
