@@ -4,8 +4,7 @@
   "description": "",
   "main": "/src/main.js",
   "scripts": {
-    "startServer": "node src/main.js",
-    "startClient": "webpack-dev-server --config webpack.config.dev.js"
+    "startServer": "node src/main.js"
   },
   "author": "",
   "license": "ISC",
