@@ -8,7 +8,6 @@ export class Task {
 }
 
 export const TaskService = new (class {
-  constructor() {}
 
   createTask(name) {
     return new Promise(function (myResolve, myReject) {
@@ -68,7 +67,7 @@ export const TaskService = new (class {
           const tasks = JSON.parse(xhr.responseText);
           myResolve(tasks);
         } else {
-          myReject("Tasks not found");
+          myReject("Failed to fetch tasks");
         }
       };
       xhr.send();
