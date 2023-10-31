@@ -2,6 +2,7 @@ import "./App.css";
 import TaskItem from "./TaskItem";
 import React from "react";
 import { TaskService, Task } from "./TaskService";
+import TaskInput from "./TaskInput";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -21,10 +22,8 @@ export default class App extends React.Component {
   }
 
   async createTask(taskName) {
-    await TaskService.createTask({
-        taskName
-      });
-      await this.loadTasks();
+    await TaskService.createTask(taskName);
+    await this.loadTasks();
   }
 
   async saveTask(taskId, taskName) {
@@ -38,6 +37,13 @@ export default class App extends React.Component {
   async deleteTask(taskId) {
     await TaskService.deleteTask(taskId);
     await this.loadTasks();
+  }
+
+  renderTaskInput() {
+    return (<TaskInput
+    key={434}
+    onSave={(newTaskName) => this.createTask(newTaskName)} 
+    />);
   }
 
   renderTaskItems() {
@@ -59,14 +65,7 @@ export default class App extends React.Component {
       <div className="App">
         <div id="background"></div>
         <div id="center" className="divWithBorder">
-          <div id="inputZone" className="divWithBorder">
-            <input
-              id="taskName"
-              className="input"
-              placeholder="What do u want to do?"
-            />
-            <button id="addBtn">Add</button>
-          </div>
+          {this.renderTaskInput()}
           <div id="list">{this.renderTaskItems()}</div>
         </div>
       </div>
