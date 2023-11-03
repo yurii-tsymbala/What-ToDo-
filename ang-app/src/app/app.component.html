@@ -3,7 +3,7 @@
   <div id="center" className="divWithBorder">
     <task-input (btnClick)="createTask($event)"></task-input>
     <div id="list">
-      <task-item *ngFor="let task of tasks" [task]="task"></task-item>
+      <task-item *ngFor="let task of tasks" [task]="task" (btnClickDelete)="deleteTask($event)"></task-item>
     </div>
   </div>
 </div>

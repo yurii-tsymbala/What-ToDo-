@@ -23,4 +23,9 @@ export class AppComponent implements OnInit {
    await this.taskService.createTask(taskName);
    await this.loadTasks();
   }
+
+  async deleteTask(task: Task) {
+    await this.taskService.deleteTask(task.id);
+    await this.loadTasks();
+   }
 }

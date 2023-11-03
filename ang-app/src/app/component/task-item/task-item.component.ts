@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Task } from 'src/app/Task';
 
 @Component({
@@ -7,19 +7,23 @@ import { Task } from 'src/app/Task';
 })
 export class TaskItemComponent implements OnInit {
   @Input() task!: Task;
+  @Output() btnClickSave = new EventEmitter();
+  @Output() btnClickDelete = new EventEmitter();
   isEditing = false; 
 
   ngOnInit(): void {
   }
 
-  onSaveClicked() {}
+  onSaveClicked() {
+    this.btnClickSave.emit();
+  }
 
   onEditClicked()  {
-    console.log("Edit clicked");
+   this.isEditing = true;
     
   }
 
   onDeleteClicked()  {
-    console.log("Delete clicked");
+    this.btnClickDelete.emit(this.task);
   }
 }
