@@ -1,1 +1,10 @@
-<div>What ToDo?</div>
+<div className="App">
+  <div id="background"></div>
+  <div id="center" className="divWithBorder">
+    <task-input (btnClick)="createTask()"></task-input>
+    <div id="list">
+      <task-item *ngFor="let task of tasks" [task]="task"></task-item>
+    </div>
+  </div>
+</div>
+
