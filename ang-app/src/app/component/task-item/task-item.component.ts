@@ -3,8 +3,7 @@ import { Task } from 'src/app/Task';
 
 @Component({
   selector: 'task-item',
-  templateUrl: './task-item.component.html',
-  styleUrls: ['./task-item.component.css']
+  templateUrl: './task-item.component.html'
 })
 export class TaskItemComponent implements OnInit {
   @Input() task!: Task;
@@ -15,7 +14,12 @@ export class TaskItemComponent implements OnInit {
 
   onSaveClicked() {}
 
-  onEditClicked() {}
+  onEditClicked()  {
+    console.log("Edit clicked");
+    
+  }
 
-  onDeleteClicked() {}
+  onDeleteClicked()  {
+    console.log("Delete clicked");
+  }
 }

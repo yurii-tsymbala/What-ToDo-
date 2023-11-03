@@ -11,7 +11,15 @@ export class TaskInputComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onClick() {
-    this.btnClick.emit(this.taskName);
+  onKey(event: any) { // without type info
+    this.taskName = event.target.value;
+    console.log(event.target.value);
+  }
+
+  onAdd() {
+    this.btnClick.emit();
+    console.log("clicked in TaskInput");
+    
+    
   }
 }

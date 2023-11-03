@@ -2,19 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from './services/task.service';
 import { Task } from './Task';
 
-
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
   tasks: Task[] = [];
+  newTaskName: string = '';
 
   constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
-    this.loadTasks();
+    this.loadTasks(); // maybe will need to transfer to onChanges()
   }
 
   async loadTasks() {
@@ -22,6 +21,6 @@ export class AppComponent implements OnInit {
   }
 
   createTask() {
-    console.log('Task created');
+    console.log('Task created in Appcomponent');
   }
 }
