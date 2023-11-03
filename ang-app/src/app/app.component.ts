@@ -8,7 +8,6 @@ import { Task } from './Task';
 })
 export class AppComponent implements OnInit {
   tasks: Task[] = [];
-  newTaskName: string = '';
 
   constructor(private taskService: TaskService) {}
 
@@ -20,7 +19,7 @@ export class AppComponent implements OnInit {
     this.tasks = await this.taskService.allTasks();
   }
 
-  createTask() {
-    console.log('Task created in Appcomponent');
+  createTask(taskName: string) {
+    console.log(taskName + "in createTask method");
   }
 }
