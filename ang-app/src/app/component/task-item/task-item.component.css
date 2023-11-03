@@ -1,0 +1,12 @@
+.btnDelete,
+  .btnEdit,
+  .btnSave,
+  #addBtn {
+    display: block;
+    min-width: 4rem;
+    height: 2rem;
+    font-weight: bolder;
+    border-radius: 10px;
+    margin-inline: 0.5rem;
+    border: 1px solid #000000ab;
+  }
