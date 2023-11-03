@@ -19,7 +19,8 @@ export class AppComponent implements OnInit {
     this.tasks = await this.taskService.allTasks();
   }
 
-  createTask(taskName: string) {
-    console.log(taskName + "in createTask method");
+  async createTask(taskName: string) {
+   await this.taskService.createTask(taskName);
+   await this.loadTasks();
   }
 }
