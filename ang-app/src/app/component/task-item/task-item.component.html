@@ -1,7 +1,29 @@
-<div className="cell divWithBorder">
-  <label className="label" id="task.id"> {{ task.name }} </label>
-  <div className="buttonsWrapper">
-    <button className="btnEdit" (click)="onEditClicked()">Edit</button>
-    <button className="btnDelete" (click)="onDeleteClicked()">Delete</button>
+<div class="cell divWithBorder">
+  <label class="label" id="task.id" *ngIf="!isEditing">
+    {{ task.name }}
+  </label>
+  <input
+    id="taskName"
+    class="input"
+    placeholder="Update the task"
+    [ngClass]="{'myHide': !isEditing}"
+    #taskUpdateName
+  />
+  <div class="buttonsWrapper">
+    <button
+      class="btnEdit"
+      (click)="onEditClicked(taskUpdateName)"
+      *ngIf="!isEditing"
+    >
+      Edit
+    </button>
+    <button
+      class="btnSave"
+      (click)="onUpdateClicked(taskUpdateName)"
+      *ngIf="isEditing"
+    >
+      Update
+    </button>
+    <button class="btnDelete" (click)="onDeleteClicked()">Delete</button>
   </div>
 </div>
