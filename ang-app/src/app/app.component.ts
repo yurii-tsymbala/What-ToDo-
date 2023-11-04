@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
-    this.loadTasks(); // maybe will need to transfer to onChanges()
+    this.loadTasks();
   }
 
   async loadTasks() {
@@ -28,4 +28,9 @@ export class AppComponent implements OnInit {
     await this.taskService.deleteTask(task.id);
     await this.loadTasks();
    }
+
+  async updateTask(task: Task) {
+    await this.taskService.updateTask(task);
+    await this.loadTasks();
+  }
 }

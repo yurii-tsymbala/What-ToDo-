@@ -1,10 +1,14 @@
-<div className="App">
+<div class="App">
   <div id="background"></div>
-  <div id="center" className="divWithBorder">
+  <div id="center" class="divWithBorder">
     <task-input (btnClick)="createTask($event)"></task-input>
     <div id="list">
-      <task-item *ngFor="let task of tasks" [task]="task" (btnClickDelete)="deleteTask($event)"></task-item>
+      <task-item
+        *ngFor="let task of tasks"
+        [task]="task"
+        (btnClickDelete)="deleteTask($event)"
+        (btnClickUpdate)="updateTask($event)"
+      ></task-item>
     </div>
   </div>
 </div>
-
