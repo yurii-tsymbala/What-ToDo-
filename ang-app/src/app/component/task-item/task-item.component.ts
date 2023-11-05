@@ -1,30 +1,32 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Task } from 'src/app/Task';
 
 @Component({
   selector: 'task-item',
-  templateUrl: './task-item.component.html',
+  templateUrl: './task-item.component.html'
 })
 export class TaskItemComponent implements OnInit {
   @Input() task!: Task;
   @Output() btnClickUpdate = new EventEmitter();
   @Output() btnClickDelete = new EventEmitter();
+  taskInput = '';
+  placeholder = 'Update the task';
   isEditing = false;
 
   ngOnInit(): void {}
 
-  onUpdateClicked(taskUpdateName: HTMLInputElement) {
-    if (taskUpdateName.value.length < 5) {
-      taskUpdateName.value = '';
-      taskUpdateName.placeholder = 'Too small )=';
+  onUpdateClicked() {
+    if (this.taskInput.length < 5) {
+      this.placeholder = 'Too small )=';
+      this.taskInput = '';
       return;
     }
-    this.task.name = taskUpdateName.value;
+    this.task.name = this.taskInput;
     this.btnClickUpdate.emit(this.task);
   }
 
-  onEditClicked(taskUpdateName: HTMLInputElement) {
-    taskUpdateName.value = this.task.name;
+  onEditClicked() {
+    this.taskInput = this.task.name;
     this.isEditing = true;
   }
 
