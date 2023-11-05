@@ -6,19 +6,21 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class TaskInputComponent implements OnInit {
   @Output() btnClick = new EventEmitter();
+  taskInput: string = '';
+  placeholder = 'What do u want to do?';
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  onAdd(taskName: HTMLInputElement) {
-    if (taskName.value.length < 5) {
-      taskName.value = '';
-      taskName.placeholder = 'Too small )=';
+  onAdd() {
+    if (this.taskInput.length < 5) {
+      this.taskInput = '';
+      this.placeholder = 'Too small )=';
       return;
     }
-    this.btnClick.emit(taskName.value);
-    taskName.value = '';
-    taskName.placeholder = 'What do u want to do?';
+    this.btnClick.emit(this.taskInput);
+    this.taskInput = '';
+    this.placeholder = 'What do u want to do?';
   }
 }
