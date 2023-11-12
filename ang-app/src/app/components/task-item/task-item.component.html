@@ -1,0 +1,23 @@
+<div class="cell divWithBorder">
+  <div *ngIf="!isEditing; then edit; else update"></div>
+</div>
+<ng-template #edit>
+  <label class="label" id="task.id">{{ task.name }}</label>
+  <div class="buttonsWrapper">
+    <button class="btnEdit" (click)="onEditClicked()">Edit</button>
+    <button class="btnDelete" (click)="onDeleteClicked()">Delete</button>
+  </div>
+</ng-template>
+
+<ng-template #update>
+  <input
+    id="taskName"
+    class="input"
+    [placeholder]="placeholder"
+    [(ngModel)]="taskInput"
+  />
+  <div class="buttonsWrapper">
+    <button class="btnSave" (click)="onUpdateClicked()">Update</button>
+    <button class="btnDelete" (click)="onDeleteClicked()">Delete</button>
+  </div>
+</ng-template>
