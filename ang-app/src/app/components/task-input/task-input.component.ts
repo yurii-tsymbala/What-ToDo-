@@ -1,17 +1,15 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'task-input',
   templateUrl: './task-input.component.html',
 })
-export class TaskInputComponent implements OnInit {
+export class TaskInputComponent {
   @Output() btnClick = new EventEmitter();
   taskInput: string = '';
   placeholder = 'What do u want to do?';
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   onAdd() {
     if (this.taskInput.length < 5) {

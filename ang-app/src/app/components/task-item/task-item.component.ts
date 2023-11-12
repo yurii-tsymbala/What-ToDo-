@@ -1,19 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Task } from 'src/app/Task';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Task } from 'src/app/models/Task';
 
 @Component({
   selector: 'task-item',
   templateUrl: './task-item.component.html'
 })
-export class TaskItemComponent implements OnInit {
+export class TaskItemComponent{
   @Input() task!: Task;
   @Output() btnClickUpdate = new EventEmitter();
   @Output() btnClickDelete = new EventEmitter();
   taskInput = '';
   placeholder = 'Update the task';
   isEditing = false;
-
-  ngOnInit(): void {}
 
   onUpdateClicked() {
     if (this.taskInput.length < 5) {
@@ -23,6 +21,7 @@ export class TaskItemComponent implements OnInit {
     }
     this.task.name = this.taskInput;
     this.btnClickUpdate.emit(this.task);
+    this.isEditing = false;
   }
 
   onEditClicked() {

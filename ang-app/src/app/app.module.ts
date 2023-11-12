@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TaskInputComponent } from './component/task-input/task-input.component';
-import { TaskItemComponent } from './component/task-item/task-item.component';
+import { TaskInputComponent } from './components/task-input/task-input.component';
+import { TaskItemComponent } from './components/task-item/task-item.component';
 import { TaskService } from './services/task.service';
 
 @NgModule({
