@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TaskService } from './services/task.service';
 import { Task } from './models/Task';
 
@@ -6,12 +6,10 @@ import { Task } from './models/Task';
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   tasks: Task[] = [];
 
-  constructor(private taskService: TaskService) {}
-
-  ngOnInit(): void {
+  constructor(private taskService: TaskService) {
     this.loadTasks();
   }
 
