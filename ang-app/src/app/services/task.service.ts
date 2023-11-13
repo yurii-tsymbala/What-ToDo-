@@ -1,74 +1,40 @@
 import { Injectable } from '@angular/core';
-import { Task } from '../Task';
+import { Task } from '../models/Task';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  constructor() {}
+  tasks: Task[];
 
-  createTask(name: string) {
-    return new Promise<void>(function (myResolve, myReject) {
-      let task = new Task(name);
-      let xhr = new XMLHttpRequest();
-      xhr.open('POST', 'http://localhost:3001/addtask', true);
-      xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-      xhr.onload = function () {
-        if (xhr.status === 201) {
-          myResolve();
-        } else {
-          myReject('Failed to create task');
-        }
-      };
-      xhr.send(JSON.stringify(task));
-    });
+  constructor() {
+    this.tasks = [
+      { id: '4234234', name: 'Buy pizza' },
+      { id: '234234234', name: 'Sold car' },
+      { id: '42342342344', name: 'Rent house' },
+    ];
   }
 
-  updateTask(task: Task) {
-    return new Promise<void>(function (myResolve, myReject) {
-      let xhr = new XMLHttpRequest();
-      xhr.open('PUT', 'http://localhost:3001/' + task.id, true);
-      xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-      xhr.onload = function () {
-        if (xhr.status === 204) {
-          myResolve();
-        } else {
-          myReject('Failed to update task');
-        }
-      };
-      xhr.send(JSON.stringify(task));
-    });
+  async createTask(name: string) {
+    let task = new Task(name);
+    this.tasks.unshift(task);
   }
 
-  deleteTask(taskId: string) {
-    return new Promise<void>(function (myResolve, myReject) {
-      let xhr = new XMLHttpRequest();
-      xhr.open('DELETE', 'http://localhost:3001/' + taskId, true);
-      xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-      xhr.onload = function () {
-        if (xhr.status === 200) {
-          myResolve();
-        } else {
-          myReject('Failed to delete task');
-        }
-      };
-      xhr.send();
-    });
+  async updateTask(task: Task) {
+    const id = task.id;
+    const taskInDB = this.tasks.find((el) => el.id === id);
+    if (taskInDB) {
+      console.log(taskInDB);
+      
+      taskInDB.name = task.name;
+    }
   }
 
-  allTasks() {
-    return new Promise<Task[]>(function (myResolve, myReject) {
-      let xhr = new XMLHttpRequest();
-      xhr.open('GET', 'http://localhost:3001/tasks');
-      xhr.onload = function () {
-        if (xhr.status === 200) {
-          const tasks: Task[] = JSON.parse(xhr.responseText);
-          myResolve(tasks);
-        } else {
-          myReject('Failed to fetch tasks');
-        }
-      };
-      xhr.send();
-    });
+  async deleteTask(taskId: string) {
+    this.tasks = this.tasks.filter((task) => task.id !== taskId);
+  }
+
+  async allTasks() {
+    return this.tasks;
   }
 }
