@@ -1,6 +1,5 @@
 const cors = require("cors");
 const express = require("express");
-const path = require("path");
 const body = require("body-parser");
 
 const app = express();
@@ -9,11 +8,7 @@ const jsonParser = body.json();
 
 app.use(cors());
 
-var tasks = [
-  { id: "4234234", name: "Buy pizza" },
-  { id: "234234234", name: "Sold car" },
-  { id: "42342342344", name: "Rent house" },
-];
+var tasks = [];
 
 app.get("/tasks", (request, response) => {
   response.json(tasks);
