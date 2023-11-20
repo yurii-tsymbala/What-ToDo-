@@ -1,7 +1,7 @@
 import "./App.css";
 import TaskItem from "./TaskItem";
 import React from "react";
-import { TaskService, Task } from "./TaskService";
+import { TaskService } from "./TaskService";
 import TaskInput from "./TaskInput";
 
 export default class App extends React.Component {

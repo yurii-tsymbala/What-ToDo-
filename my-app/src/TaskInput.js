@@ -1,39 +1,35 @@
-import React from "react";
+import { useState } from "react";
 
-export default class TaskInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.inputEl = null;
-  }
+export default function TaskInput({ onSave }) {
+    const [placeholder, setPlaceholder] = useState("What do u want to do?");
+    const [inputData, setInputData] = useState("");
 
-  onCreateClicked() {
-    if (this.inputEl.value.length < 5) {
-        this.inputEl.value = "";
-        this.inputEl.placeholder = "Too small (=";
-        return;
+    function onCreateClicked() {
+        if (inputData.length < 5) {
+            setPlaceholder("Too small (=");
+            setInputData("");
+            return;
+        }
+        onSave(inputData);
+        setPlaceholder("What do u want to do?");
+        setInputData("");
     }
-    this.props.onSave(this.inputEl.value);
-    this.inputEl.value = "";
-    this.inputEl.placeholder = "What do u want to do?";
-  }
 
-  createInputref = (input) => {
-    this.inputEl = input;
-  };
+    function handleInputChange(event) {
+        setInputData(event.target.value);
+    }
 
-  render() {
     return (
-      <div id="inputZone" className="divWithBorder">
-        <input
-          id="taskInput"
-          className="input"
-          placeholder="What do u want to do?"
-          ref={this.createInputref}
-        />
-        <button id="addBtn" onClick={() => this.onCreateClicked()}>
-          Add
-        </button>
-      </div>
+        <div id="inputZone" className="divWithBorder">
+            <input
+                className="input"
+                placeholder={placeholder}
+                value={inputData}
+                onChange={handleInputChange}
+            />
+            <button id="addBtn" onClick={onCreateClicked}>
+                Add
+            </button>
+        </div>
     );
-  }
 }
