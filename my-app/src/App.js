@@ -48,7 +48,6 @@ export default class App extends React.Component {
             return (
                 <TaskItem
                     key={task.id}
-                    id={task.id}
                     name={task.name}
                     onDelete={() => this.deleteTask(task.id)}
                     onSave={(newName) => this.saveTask(task.id, newName)}
