@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function TaskInput({ onSave }) {
+export default function TaskInput( props ) {
     const [placeholder, setPlaceholder] = useState("What do u want to do?");
     const [inputData, setInputData] = useState("");
 
@@ -10,7 +10,7 @@ export default function TaskInput({ onSave }) {
             setInputData("");
             return;
         }
-        onSave(inputData);
+        props.onSave(inputData);
         setPlaceholder("What do u want to do?");
         setInputData("");
     }
